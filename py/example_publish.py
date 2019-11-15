@@ -14,16 +14,16 @@ def main(argv):
 
 	di = {
 		"header": {
-			"timestamp": 1234
+			"timestamp": 1573798217
 		},
 		"stations": [
 			{
-				"id": "1234",
-				"timestamp": 1234,
+				"id": "IN/26353",
+				"timestamp": 1573799342,
 				"dataList": [
 					{
 						"type": Type.PM10,
-						"value": 123
+						"value": 565
 					}
 				]
 			}
