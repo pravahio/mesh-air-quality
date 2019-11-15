@@ -16,7 +16,7 @@ class MeshAirQuality(MeshRPC):
 
         feed = FeedMessage()
 
-        channelLen = len(Default.topic)
+        channelLen = len(Default.channel)
 
         try:
             for msg in s:
