@@ -1,0 +1,95 @@
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// Air-Quality protocol lets you publish air quality (PM2.5, PM10, NO2,
+// NH3, SO2, CO, OZONE and others) data.
+
+syntax = "proto3";
+
+package air_quality;
+
+option java_package = "io.pravah.air.quality";
+
+message FeedMessage {
+    // Metadata
+    FeedHeader header = 1;
+
+    // Actual air-quality data feed
+    repeated FeedStation stations = 2;
+}
+
+// Borrowed from GTFS-Realtime protocol
+message FeedHeader {
+    // Version of the feed specification.
+    // The current version is 0.0.1
+    string air_quality_version = 1;
+  
+    // Determines whether the current fetch is incremental.
+    enum Incrementality {
+      FULL_DATASET = 0;
+      DIFFERENTIAL = 1;
+    }
+    Incrementality incrementality = 2;
+  
+    // This timestamp identifies the moment when the content of this feed has been
+    // created (in server time). In POSIX time (i.e., number of seconds since
+    // January 1st 1970 00:00:00 UTC).
+    uint64 timestamp = 3;
+  }
+
+message FeedStation {
+    // id identifies each station uniquely.
+    string id = 1;
+
+    // timestamp identifies the moment when values are observed by the device.
+    uint64 timestamp = 2;
+
+    // Actual data value.
+    repeated DataPoint dataList = 3;
+}
+
+message DataPoint {
+    enum Type {
+        PM2_5 = 0;              // ug/m3
+        PM10 = 1;               // ug/m3
+        NO = 2;                 // ug/m3
+        NO2 = 3;                // ug/m3
+        NOX = 4;                // mg/m3 [use ug/m3 in the future] 
+        NH3 = 5;                // ug/m3
+        SO2 = 6;                // ug/m3
+        CO = 7;                 // mg/m3
+        OZONE = 8;              // ug/m3
+        BENZENE = 9;            // ug/m3
+        TOLUENE = 10;           // ug/m3
+        TEMP = 11;              // K
+        RH = 12;                // %
+        WS = 13;                // m/s
+        WD = 14;                // degree
+        BP = 15;                // mmHg
+        MP_XYLENE = 16;         // ug/m3
+        SR = 17;                // W/mt2
+        RF = 18;                // mm
+        ETH_BENZENE = 19;       // 
+    }
+
+    Type type = 1;
+    double value = 2;
+    repeated Error error = 3;
+    // timestamp when this measure was taken by the instrument.
+    uint64 timestamp = 4;
+}
+
+message Error {
+    string type = 1;
+    float value = 2;
+}
