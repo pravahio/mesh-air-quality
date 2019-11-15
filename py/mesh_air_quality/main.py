@@ -12,7 +12,7 @@ class MeshAirQuality(MeshRPC):
         super().__init__(endpoint)
 
     def subscribe(self, geospace):
-        s = super().subscribe(Default.topic, geospace)
+        s = super().subscribe(Default.channel, geospace)
 
         feed = FeedMessage()
 
@@ -27,7 +27,7 @@ class MeshAirQuality(MeshRPC):
     
     def registerToPublish(self, geospace):
         try:
-            super().registerToPublish(Default.topic, geospace)
+            super().registerToPublish(Default.channel, geospace)
         except MeshRPCException as e:
             raise 
 
@@ -41,7 +41,7 @@ class MeshAirQuality(MeshRPC):
         raw = feed.SerializeToString()
 
         try:
-            res = super().publish(Default.topic, geospace, raw)
+            res = super().publish(Default.channel, geospace, raw)
         except MeshRPCException as e:
             raise 
     

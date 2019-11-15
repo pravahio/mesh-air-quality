@@ -1,7 +1,7 @@
 from .lib.air_quality_pb2 import DataPoint
 
 class Default:
-    topic = "AIR.QUALITY"
+    channel = "/AirQuality"
     rpcURL = "127.0.0.1:5555"
 
 class Type:
