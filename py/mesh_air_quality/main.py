@@ -24,6 +24,9 @@ class MeshAirQuality(MeshRPC):
                 yield feed, msg.topic.pop()[channelLen:]
         except grpc.RpcError as e:
             raise MeshRPCException(e.details())
+
+    def unsubscribe(self, geospaces):
+        return super().unsubscribe(Default.channel, geospaces)
     
     def registerToPublish(self, geospace):
         try:
@@ -44,4 +47,7 @@ class MeshAirQuality(MeshRPC):
             res = super().publish(Default.channel, geospace, raw)
         except MeshRPCException as e:
             raise 
+    
+    def get_channel(self):
+        return Default.channel
     
