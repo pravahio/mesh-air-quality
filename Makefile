@@ -9,6 +9,11 @@ js: *.proto
 	mkdir -p build/js
 	protoc -I=. --js_out=import_style=commonjs:build/js air-quality.proto
 
+java: *.proto
+	mkdir -p build/java
+	protoc -I=. --java_out=build/java air-quality.proto
+
+
 clean: 
 	rm -rf build
 
